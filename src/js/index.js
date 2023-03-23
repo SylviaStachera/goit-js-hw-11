@@ -13,19 +13,23 @@ const addPhotoCards = images => {
   const galleryItem = images
     .map(img => {
       gallery.innerHTML += `<div class="photo-card">
-    <img src="${img.webformatURL}" alt="${img.tags}" loading="lazy" />
+    <img class="photo-img" src="${img.webformatURL}" alt="${img.tags}" loading="lazy" />
     <div class="info">
       <p class="info-item">
-        <b>Likes: ${img.likes}</b>
+        <b>Likes: </b>
+        <span class="info-item__numbers">${img.likes}</span>
+      </p> 
+      <p class="info-item">
+        <b>Views: </b>
+        <span class="info-item__numbers">${img.views}</span>
       </p>
       <p class="info-item">
-        <b>Views: ${img.views}</b>
+        <b>Comments: </b>
+        <span class="info-item__numbers">${img.comments}</span>
       </p>
       <p class="info-item">
-        <b>Comments: ${img.comments}</b>
-      </p>
-      <p class="info-item">
-        <b>Downloads: ${img.downloads}</b>
+        <b>Downloads: </b>
+        <span class="info-item__numbers">${img.downloads}</span>
       </p>
     </div>
   </div>`;
