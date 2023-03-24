@@ -2,9 +2,9 @@
 
 const KEY = '34667296-fe4db44c106503806ff969e6a';
 
-const searchImages = async q => {
+const searchImages = async (q, pageNr) => {
   const baseUrl = await fetch(
-    `https://pixabay.com/api/?key=${KEY}&q=${q}&image_type=photo&orientation=horizontal&safesearch=true`
+    `https://pixabay.com/api/?key=${KEY}&q=${q}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${pageNr}`
   );
   const response = async response => {
     try {
