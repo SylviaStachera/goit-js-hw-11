@@ -67,3 +67,40 @@
 .info-item__numbers {
   padding-top: 5px;
 }
+
+.load-more {
+  display: flex;
+  margin: 0px auto 10px;
+  padding: 10px 15px;
+  font-size: 15px;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  background-color: rgb(104, 136, 191);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.choose {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.choose-add__btm {
+  height: 50px;
+  font-size: 15px;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  background-color: rgb(104, 136, 191);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+// .load-div {
+//   display: flex;
+//   flex-direction: row;
+// }

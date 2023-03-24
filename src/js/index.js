@@ -6,15 +6,44 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 
 //==========================================
 const form = document.querySelector('.search-form');
+const btnSubmit = document.querySelector('.search-form__button');
 const gallery = document.querySelector('.gallery');
 const loadMore = document.querySelector('.load-more');
 const gallerySimpleLightBox = new SimpleLightbox('.gallery a', {});
+const btnAdd = document.querySelector('.btnAdd');
+const btnScroll = document.querySelector('.btnScroll');
+const infoChoose = document.querySelector('.choose');
+
+//choose
+form.style.opacity = '0.5';
+form.setAttribute('disabled', '');
+btnSubmit.setAttribute('disabled', '');
 //paginacja
 let pageNr = 1;
 //button "load more" deafoult
 loadMore.style.display = 'none';
 // The value of the search field
 let searchQueryInput = '';
+
+//==========================================
+//choose btnAdd
+btnAdd.addEventListener('click', e => {
+  btnScroll.style.display = 'none';
+  form.removeAttribute('style');
+  form.removeAttribute('disabled');
+  btnSubmit.removeAttribute('disabled');
+  infoChoose.style.display = 'none';
+});
+
+//choose btnScroll
+btnScroll.addEventListener('click', e => {
+  btnAdd.style.display = 'none';
+  form.removeAttribute('style');
+  form.removeAttribute('disabled');
+  btnSubmit.removeAttribute('disabled');
+  infoChoose.style.display = 'none';
+  loadMore.style.opacity = '0';
+});
 
 //==========================================
 // CLEAR GALLRY
@@ -93,7 +122,6 @@ form.addEventListener('submit', e => {
           console.log(dataImages);
           addPhotoCards(dataImages.hits);
           Notify.success(`"Hooray! We found ${dataImages.totalHits} images."`);
-          console.log(`first: ${pageNr}`);
 
           loadMore.style.display = 'block';
 
@@ -111,7 +139,7 @@ form.addEventListener('submit', e => {
 });
 
 //===========================================================
-//SEARCHING MORE!!! IMG
+//SEARCHING MORE IMG BY BUTTON
 loadMore.addEventListener('click', e => {
   e.preventDefault();
 
@@ -135,3 +163,38 @@ loadMore.addEventListener('click', e => {
     })
     .catch(error => console.log(error));
 });
+
+//==========================================
+// INFINITE SCROLL
+
+//function handScroll() {}
+
+const handleScroll = () => {
+  if (document.querySelector('.load-more').style.opacity === '0') {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+
+    if (scrollTop + clientHeight >= scrollHeight - 1) {
+      pageNr++;
+
+      searchImages(searchQueryInput, pageNr)
+        .then(dataImages => {
+          if (dataImages.hits.length === 0) {
+            Notify.failure(
+              'Sorry, there are no images matching your search query. Please try again.'
+            );
+          } else {
+            console.log(dataImages);
+            addPhotoCards(dataImages.hits);
+            Notify.success(
+              `"Hooray! We found ${dataImages.totalHits} images."`
+            );
+            loadMore.style.display = 'block';
+            return dataImages.hits;
+          }
+        })
+        .catch(error => console.log(error));
+    }
+  }
+};
+
+document.addEventListener('scroll', handleScroll);
